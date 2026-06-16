@@ -1,0 +1,271 @@
+{
+    "loginPage": {
+        "email": "Email",
+        "password": "Jelszó",
+        "login": "Bejelentkezés",
+        "forgotPassword": "Elfelejtett jelszó?",
+        "rememberMe": "Emlékezz rám",
+        "errors": {
+            "email": "Érvénytelen email",
+            "password": "Érvénytelen jelszó"
+        }
+    },
+    "forgotPasswordPage": {
+        "text": "Elfelejtetted a jelszavad? Nem gond. Csak add meg az email címed, és küldünk egy jelszó-visszaállító linket, amellyel új jelszót adhatsz meg.",
+        "email": "Email",
+        "send": "Jelszó-visszaállító link küldése",
+        "error": "Érvénytelen email",
+        "back": "Vissza"
+    },
+    "navBar": {
+        "dashboard": "Irányítópult",
+        "desks": "Asztalok",
+        "menu": "Menü",
+        "translation": "Fordítás",
+        "profile": "Személyzet",
+        "reports": "Jelentések",
+        "orders": "Rendelések",
+        "logout": "Kijelentkezés"
+    },
+    "util": {
+        "darkMode": "Sötét mód",
+        "lightMode": "Világos mód",
+        "previousPage": "Előző oldal",
+        "nextPage": "Következő oldal",
+        "back": "Vissza",
+        "save": "Mentés",
+        "cancel": "Mégse",
+        "clear": "Törlés",
+        "delete": "Törlés"
+    },
+    "adminDashboard": {
+        "desks": {
+            "title": "Asztalok",
+            "description": "Itt megtekintheti, létrehozhatja és összevonhatja az asztalokat."
+        },
+        "menu": {
+            "title": "Menü",
+            "description": "Itt megtekintheti, létrehozhatja és szerkesztheti a menüelemeket."
+        },
+        "orders": {
+            "title": "Rendelések",
+            "description": "Itt kezelheti a rendeléseket."
+        },
+        "staff": {
+            "title": "Személyzet",
+            "description": "Itt kezelheti a személyzetet. Megtekintheti, létrehozhatja vagy törölheti a profilokat."
+        },
+        "reports": {
+            "title": "Értékesítési jelentések",
+            "description": "Itt megtekintheti az értékesítési jelentéseket, dátum alapján szűrhet és exportálhatja az adatokat."
+        },
+        "logOut": {
+            "title": "Kijelentkezés",
+            "description": "Itt kijelentkezhet, ha elhagyja a kávézót."
+        }
+    },
+    "desksPage": {
+        "newConfig": "Új konfiguráció létrehozása",
+        "addDesk": "Asztal hozzáadása",
+        "save": "Mentés",
+        "delete": "Törlés",
+        "nrOfSeats": "Kérem, válassza ki az ülőhelyek számát",
+        "addSeats": "Ülőhelyek hozzáadása",
+        "clearCanvas": "Vászon törlése",
+        "editSeats": "Ülőhelyek szerkesztése",
+        "placeOrder": "Rendelés leadása",
+        "generateCode": "Kód generálása",
+        "clearCode": "Kód törlése",
+        "viewOrder": "Rendelések megtekintése",
+        "deskCode": "Asztalkód",
+        "deleteGroup": "Csoport törlése",
+        "roomModal": {
+            "askDimension": "Adja meg a szoba méreteit",
+            "width": "Szélesség",
+            "length": "Hosszúság",
+            "changeSize": "Méret módosítása",
+            "positiveValidationError": "Kérem, pozitív számokat adjon meg"
+        },
+        "clearModal": {
+            "title": "Biztosan törölni szeretné az asztalokat?",
+            "description": "Ez eltávolítja az összes asztalt, és elölről kell kezdenie.",
+            "confirm": "Megerősítés",
+            "cancel": "Mégse"
+        },
+        "mergeModal": {
+            "title": "Asztalok egyesítése",
+            "selectTables": "Kiválasztott asztalok az egyesítéshez",
+            "merge": "Egyesítés",
+            "cancel": "Mégse"
+        },
+        "ongoingOrders": {
+            "title": "Hiba az új konfiguráció létrehozásakor",
+            "message": "Folyamatban lévő rendelései vannak. Kérjük, fejezze be ezeket, mielőtt új konfigurációt hozna létre."
+        },
+        "currentSize": "Jelenlegi méret",
+        "meter": "méter",
+        "saveSuccess": "Sikeresen mentve"
+    },
+    "menuPage": {
+        "title": "Menü kezelése",
+        "searchItem": "Menüelemek keresése",
+        "search": "Keresés",
+        "noItems": "Nincs találat",
+        "addItem": "Elem hozzáadása",
+        "exportCSV": "Exportálás CSV-be",
+        "importCSV": "Importálás CSV-ből",
+        "table": {
+            "image": "Kép",
+            "name": "Név",
+            "category": "Kategória",
+            "eta": "Elkészítési idő (perc)",
+            "description": "Leírás",
+            "quantity": "Mennyiség",
+            "price": "Ár",
+            "actions": "Műveletek"
+        },
+        "create": {
+            "title": "Menüelem létrehozása"
+        },
+        "editItem": {
+            "title": "Menüelem szerkesztése",
+            "oldImage": "Régi kép"
+        }
+    },
+    "itemCard": {
+        "description": "Leírás",
+        "price": "Ár",
+        "status": "Állapot",
+        "desk": "Asztal",
+        "group": "Csoport",
+        "order": "Rendelés",
+        "timeToPrep": "Elkészítési idő",
+        "lei": "lej",
+        "min": "perc",
+        "orderedAt": "Rendelés ideje",
+        "totalPrice": "Teljes ár",
+        "willServe": "Tálalás várható ideje",
+        "pricePerItem": "Egységár",
+        "quantity": "Mennyiség",
+        "pricePerUnit": "Ár \/ egység",
+        "outOfStock": "Nincs készleten"
+    },
+    "modal": {
+        "cancel": "Mégse",
+        "confirm": "Megerősítés",
+        "delete": "Törlés"
+    },
+    "ordersPage": {
+        "title": "Rendelések",
+        "showGuest": {
+            "deleteModalText": "Biztosan törölni szeretné ezt az elemet a rendelésből?",
+            "title": "Rendelés információk",
+            "orderedAt": "Rendelés ideje",
+            "backToMenu": "Vissza a menübe",
+            "payOrder": "Rendelés fizetése",
+            "orderedItems": "Rendelt tételek"
+        },
+        "showStaff": {
+            "deleteOrder": "Rendelés törlése",
+            "orderedAt": "Rendelés ideje",
+            "updateStatus": "Állapot frissítése",
+            "payAll": "Összes fizetése",
+            "paySelection": "Kiválasztott fizetése",
+            "orderedItems": "Rendelt tételek",
+            "paidPerAll": "Fizetve \/ Összes",
+            "pay": "Fizetés",
+            "allPaid": "Minden kifizetve",
+            "deleteOrderModalText": "A rendelés törlése visszavonhatatlan! Folytatni szeretné?",
+            "deleteItemModalText": "Biztosan törölni szeretné ezt az elemet a rendelésből?"
+        }
+    },
+    "orderStatus": {
+        "pending": "Folyamatban",
+        "cancelled": "Törölve",
+        "served": "Kiszolgálva",
+        "completed": "Teljesítve"
+    },
+    "cartActions": {
+        "addToCart": "Kosárba tesz",
+        "updateInCart": "Kosár frissítése"
+    },
+    "icons": {
+        "details": "Részletek",
+        "deleteItem": "Elem törlése"
+    },
+    "homePage": {
+        "orderHeading": "Böngéssze a menüt, adja le rendelését",
+        "orderButton": "Rendelés most",
+        "loginHeading": "Van már fiókja?",
+        "loginButton": "Bejelentkezés"
+    },
+    "translationPage": {
+        "title": "Fordítások kezelése",
+        "export": {
+            "title": "Fordítás exportálása",
+            "description": "Fordítási fájl exportálása XLIFF formátumba. Ez a fájl más nyelvekre történő fordításhoz használható.",
+            "selectLanguage": "Forrásnyelv kiválasztása",
+            "export": "Exportálás XLIFF-be",
+            "importError": "Hiba történt a fájl exportálásakor."
+        },
+        "translation": {
+            "title": "Automatikus fordítás",
+            "description": "Itt automatikusan lefordíthatja az alkalmazást más nyelvekre. Ne feledje, hogy ezek a fordítások automatikusak.",
+            "selectLanguage": "Forrásnyelv kiválasztása",
+            "targetLanguage": "Célnyelv kiválasztása",
+            "sendToTranslate": "Fordítás elküldése"
+        },
+        "import": {
+            "title": "Fordítás importálása",
+            "description": "Fordítási fájl importálása az alkalmazásba. A fájlnak XLIFF formátumúnak kell lennie.",
+            "selectFile": "XLIFF fájl kiválasztása",
+            "noFile": "Nincs kiválasztott fájl",
+            "import": "Importálás",
+            "importSuccess": "Sikeres importálás",
+            "importError": "Hiba történt a fájl importálásakor."
+        }
+    },
+    "staffPage": {
+        "title": "Személyzet kezelése",
+        "create": "Személyzet hozzáadása",
+        "edit": "Szerkesztés",
+        "editPage": {
+            "title": "Személyzet szerkesztése",
+            "name": "Név",
+            "email": "Email",
+            "phone": "Telefonszám",
+            "role": "Szerepkör",
+            "isActive": "Aktív",
+            "password": "Kezdeti jelszó",
+            "confirmPassword": "Jelszó megerősítése"
+        },
+        "status": "Állapot",
+        "active": "Aktív",
+        "inactive": "Inaktív",
+        "createdAt": "Létrehozva",
+        "action": "Műveletek",
+        "confirmDelete": {
+            "title": "Személyzet törlése",
+            "message": "Biztosan törölni szeretné ezt a személyzetet? Ez a művelet nem visszavonható. Személyzet: "
+        }
+    },
+    "reportsPage": {
+        "canvasLabel": "Eladott mennyiség",
+        "title": "Értékesítési jelentések",
+        "totalRevenue": "Teljes bevétel",
+        "totalOrders": "Összes rendelés",
+        "totalItems": "Eladott tételek összesen",
+        "staffMembers": "Személyzet",
+        "allTimeOrders": "Összes rendelés",
+        "loading": "Betöltés",
+        "exportCSV": "Exportálás CSV-be",
+        "mostPopularItems": "Legnépszerűbb tételek",
+        "table": {
+            "order": "Rendelés",
+            "time": "Idő",
+            "status": "Állapot",
+            "desk_group": "Asztal \/ Csoport",
+            "description": "Leírás"
+        }
+    }
+}

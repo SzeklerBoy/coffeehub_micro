@@ -1,0 +1,67 @@
+name: Deploy to AWS Lightsail server
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    name: Deploy to AWS Lightsail
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Deploy via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.LIGHTSAIL_IP }} << 'EOF'
+            cd /var/www/html/coffeehubv2
+
+            # Fix ownership BEFORE doing anything
+            sudo chown -R ubuntu:ubuntu .
+
+            # Clean logs and caches
+            sudo rm -f storage/logs/laravel.log
+            sudo rm -rf bootstrap/cache/*
+            sudo rm -rf storage/framework/views/*
+
+            # Set correct permissions
+            sudo chmod -R 775 storage bootstrap
+            sudo find storage -type f -exec chmod 664 {} \;
+            sudo find storage -type d -exec chmod 775 {} \;
+            sudo find bootstrap -type f -exec chmod 664 {} \;
+            sudo find bootstrap -type d -exec chmod 775 {} \;
+
+            # Pull latest changes
+            git pull origin develop
+
+            # Composer
+            composer install --no-interaction --prefer-dist
+
+            # Laravel caches
+            php artisan config:clear
+            php artisan route:clear
+            php artisan view:clear
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+
+            # Node dependencies
+            npm install
+            npm run build
+
+            # Set final permissions for Apache to serve
+            sudo chown -R www-data:www-data .
+            sudo chmod -R 775 storage bootstrap
+
+            # Restart web server
+            sudo systemctl restart apache2
+          EOF
+

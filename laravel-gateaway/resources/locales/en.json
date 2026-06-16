@@ -1,0 +1,271 @@
+{
+    "loginPage": {
+        "email": "Email",
+        "password": "Password",
+        "login": "Login",
+        "forgotPassword": "Forgot Password?",
+        "rememberMe": "Remember Me",
+        "errors": {
+            "email": "Invalid email",
+            "password": "Invalid password"
+        }
+    },
+    "forgotPasswordPage": {
+        "text": "Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.",
+        "email": "Email",
+        "send": "Email Password Reset Link",
+        "error": "Invalid email",
+        "back": "Back"
+    },
+    "navBar": {
+        "dashboard": "Dashboard",
+        "desks": "Desks",
+        "menu": "Menu",
+        "translation": "Translation",
+        "profile": "Staff",
+        "reports": "Reports",
+        "orders": "Orders",
+        "logout": "Logout"
+    },
+    "util": {
+        "darkMode": "Dark Mode",
+        "lightMode": "Light Mode",
+        "previousPage": "Previous Page",
+        "nextPage": "Next Page",
+        "back": "Back",
+        "save": "Save",
+        "cancel": "Cancel",
+        "clear": "Clear",
+        "delete": "Delete"
+    },
+    "adminDashboard": {
+        "desks": {
+            "title": "Desks",
+            "description": "Here you can view, create and merge desks."
+        },
+        "menu": {
+            "title": "Menu",
+            "description": "Here you can view, create and edit menu items."
+        },
+        "orders": {
+            "title": "Orders",
+            "description": "Here you can manage the orders."
+        },
+        "staff": {
+            "title": "Staff",
+            "description": "Here you can manage the staff. You can view, create or delete staff member profiles."
+        },
+        "reports": {
+            "title": "Sales Reports",
+            "description": "Here you view the sales reports. You can filter by date and export the data."
+        },
+        "logOut": {
+            "title": "Log Out",
+            "description": "Here you can log out if you leave the cafe."
+        }
+    },
+    "desksPage": {
+        "newConfig": "Create new config",
+        "addDesk": "Add Table",
+        "save": "Save",
+        "delete": "Delete",
+        "nrOfSeats": "Please select the number of seats",
+        "addSeats": "Add Seats",
+        "clearCanvas": "Clear Canvas",
+        "editSeats": "Edit Seats",
+        "placeOrder": "Make an order",
+        "generateCode": "Generate code",
+        "clearCode": "Clear code",
+        "viewOrder": "View orders",
+        "deskCode": "Desk code",
+        "deleteGroup": "Delete group",
+        "roomModal": {
+            "askDimension": "Please enter the dimensions of room",
+            "width": "Width",
+            "length": "Length",
+            "changeSize": "Change Size",
+            "positiveValidationError": "Please enter positive numbers"
+        },
+        "clearModal": {
+            "title": "Do you really want to clear the desk?",
+            "description": "This will remove all the tables and you will have to start from scratch.",
+            "confirm": "Confirm",
+            "cancel": "Cancel"
+        },
+        "mergeModal": {
+            "title": "Merge tables",
+            "selectTables": "Selected tables to merge",
+            "merge": "Merge",
+            "cancel": "Cancel"
+        },
+        "ongoingOrders": {
+            "title": "Error while creating new configuration",
+            "message": "You have ongoing orders. Please finish them before creating a new configuration."
+        },
+        "currentSize": "Current Size",
+        "meter": "meter",
+        "saveSuccess": "Saved successfully"
+    },
+    "menuPage": {
+        "title": "Manage Menu",
+        "searchItem": "Search menu items",
+        "search": "Search",
+        "noItems": "No items found",
+        "addItem": "Add Item",
+        "exportCSV": "Export to CSV",
+        "importCSV": "Import from CSV",
+        "table": {
+            "image": "Image",
+            "name": "Name",
+            "category": "Category",
+            "eta": "Time to prepare (minutes)",
+            "description": "Description",
+            "quantity": "Quantity",
+            "price": "Price",
+            "actions": "Actions"
+        },
+        "create": {
+            "title": "Create menu item"
+        },
+        "editItem": {
+            "title": "Edit menu item",
+            "oldImage": "Old Image"
+        }
+    },
+    "itemCard": {
+        "description": "Description",
+        "price": "Price",
+        "status": "Status",
+        "desk": "Desk",
+        "group": "Group",
+        "order": "Order",
+        "timeToPrep": "Time to prepare",
+        "lei": "lei",
+        "min": "min",
+        "orderedAt": "Ordered at",
+        "totalPrice": "Total price",
+        "willServe": "Will be served around",
+        "pricePerItem": "Price/item",
+        "quantity": "Quantity",
+        "pricePerUnit": "Price/unit",
+        "outOfStock": "Out of stock"
+    },
+    "modal": {
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "delete": "Delete"
+    },
+    "ordersPage": {
+        "title": "Orders",
+        "showGuest": {
+            "deleteModalText": "Are you sure you want to delete this item from your order?",
+            "title": "Order information",
+            "orderedAt": "Ordered at",
+            "backToMenu": "Back to menu",
+            "payOrder": "Pay order",
+            "orderedItems": "Ordered items"
+        },
+        "showStaff": {
+            "deleteOrder": "Delete order",
+            "orderedAt": "Ordered at",
+            "updateStatus": "Update status",
+            "payAll": "Pay all",
+            "paySelection": "Pay selection",
+            "orderedItems": "Ordered items",
+            "paidPerAll": "Paid/All",
+            "pay": "Pay",
+            "allPaid": "All paid",
+            "deleteOrderModalText": "Deleting an order is irreversible! Would you like to continue?",
+            "deleteItemModalText": "Are you sure you want to delete this item from your order?"
+        }
+    },
+    "orderStatus": {
+        "pending": "In progress",
+        "cancelled": "Cancelled",
+        "served": "Served",
+        "completed": "Completed"
+    },
+    "cartActions": {
+        "addToCart": "Add to cart",
+        "updateInCart": "Update in cart"
+    },
+    "icons": {
+        "details": "Details",
+        "deleteItem": "Delete item"
+    },
+    "homePage": {
+        "orderHeading": "Browse the menu, place your order",
+        "orderButton": "Order Now",
+        "loginHeading": "Do you have an account?",
+        "loginButton": "Login"
+    },
+    "translationPage": {
+        "title": "Manage Translations",
+        "export": {
+            "title": "Export Translation",
+            "description": "Export the translation file to an XLIFF format. This file can be used to translate the application into other languages.",
+            "selectLanguage": "Select source language",
+            "export": "Export to XLIFF",
+            "importError": "Something went wrong while exporting the file."
+        },
+        "translation": {
+            "title": "Automatic Translation",
+            "description": "Here you can translate the application into other languages. Be aware these translations are automatic.",
+            "selectLanguage": "Select source language",
+            "targetLanguage": "Select target language",
+            "sendToTranslate": "Send to Translate"
+        },
+        "import": {
+            "title": "Import Translation",
+            "description": "Import a translation file to the application. This file should be in XLIFF format.",
+            "selectFile": "Select XLIFF file",
+            "noFile": "No file selected",
+            "import": "Import",
+            "importSuccess": "Import successful",
+            "importError": "Something went wrong while importing the file."
+        }
+    },
+    "staffPage": {
+        "title": "Manage Staff",
+        "create": "Add Staff Member",
+        "edit": "Edit",
+        "editPage": {
+            "title": "Edit Staff Member",
+            "name": "Name",
+            "email": "Email",
+            "phone": "Phone",
+            "role": "Role",
+            "isActive": "Is Active",
+            "password": "Initial Password",
+            "confirmPassword": "Confirm Password"
+        },
+        "status": "Status",
+        "active": "Active",
+        "inactive": "Inactive",
+        "createdAt": "Created at",
+        "action": "Actions",
+        "confirmDelete": {
+            "title": "Delete Staff Member",
+            "message": "Are you sure you want to delete this staff member? This action cannot be undone. Staff member: "
+        }
+    },
+    "reportsPage": {
+        "canvasLabel": "Quantity sold",
+        "title": "Sales Reports",
+        "totalRevenue": "Total revenue",
+        "totalOrders": "Total orders",
+        "totalItems": "Total items sold",
+        "staffMembers": "Staff members",
+        "allTimeOrders": "All time orders",
+        "loading": "Loading",
+        "exportCSV": "Export to CSV",
+        "mostPopularItems": "Most popular items",
+        "table": {
+            "order": "Order",
+            "time": "Time",
+            "status": "Status",
+            "desk_group": "Desk / Group",
+            "description": "Description"
+        }
+    }
+}

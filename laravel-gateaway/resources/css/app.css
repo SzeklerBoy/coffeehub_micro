@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html{
+        --coffee: #6a450b;
+        --coffee-darker: #4e3003;
+        --coffee-lighter: #7b5728;
+        --coffee-light-1: #fffefb;
+        --coffee-light-2: #fffcf7;
+        --coffee-light-3: #fffbeb;
+        --coffee-dark-0: #1b1710;
+        --coffee-dark-1: #211b17;
+        --coffee-dark-2: #292019;
+        --coffee-dark-3: #37291f;
+    }
+
+    html[data-theme='red']{
+        --coffee: #6a0b0b;
+        --coffee-darker: #4e0303;
+        --coffee-lighter: #7b2828;
+        --coffee-light-1: #fffbfb;
+        --coffee-light-2: #fff7f7;
+        --coffee-light-3: #ffebeb;
+        --coffee-dark-0: #1b1010;
+        --coffee-dark-1: #211717;
+        --coffee-dark-2: #291919;
+        --coffee-dark-3: #371f1f;
+    }
+
+    html[data-theme='green']{
+        --coffee: #1c6a0b;
+        --coffee-darker: #164e03;
+        --coffee-lighter: #3d7b28;
+        --coffee-light-1: #fcfffb;
+        --coffee-light-2: #f8fff7;
+        --coffee-light-3: #efffeb;
+        --coffee-dark-0: #121b10;
+        --coffee-dark-1: #192117;
+        --coffee-dark-2: #1c2919;
+        --coffee-dark-3: #24371f;
+    }
+
+    html[data-theme='blue']{
+        --coffee: #0b346a;
+        --coffee-darker: #032c4e;
+        --coffee-lighter: #28517b;
+        --coffee-light-1: #fbfdff;
+        --coffee-light-2: #f7fbff;
+        --coffee-light-3: #ebf4ff;
+        --coffee-dark-0: #10161b;
+        --coffee-dark-1: #171d21;
+        --coffee-dark-2: #192129;
+        --coffee-dark-3: #1f2c37;
+    }
+}
+
+[x-cloak] { display: none !important; }

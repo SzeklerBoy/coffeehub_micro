@@ -1,0 +1,272 @@
+{
+    "loginPage": {
+        "email": "Email",
+        "password": "Parolă",
+        "login": "Autentificare",
+        "forgotPassword": "Ai uitat parola?",
+        "rememberMe": "Ține-mă minte",
+        "errors": {
+            "email": "Email invalid",
+            "password": "Parolă invalidă"
+        }
+    },
+    "forgotPasswordPage": {
+        "text": "Ai uitat parola? Nicio problemă. Spune-ne doar adresa ta de email și îți vom trimite un link de resetare a parolei care îți va permite să alegi una nouă.",
+        "email": "Email",
+        "send": "Trimite link de resetare parolă",
+        "error": "Email invalid",
+        "back": "Înapoi"
+    },
+    "navBar": {
+        "dashboard": "Panou control",
+        "desks": "Mese",
+        "menu": "Meniu",
+        "translation": "Traducere",
+        "profile": "Personal",
+        "reports": "Rapoarte",
+        "orders": "Comenzi",
+        "logout": "Deconectare"
+    },
+    "util": {
+        "darkMode": "Mod întunecat",
+        "lightMode": "Mod luminos",
+        "previousPage": "Pagina anterioară",
+        "nextPage": "Pagina următoare",
+        "back": "Înapoi",
+        "save": "Salvează",
+        "cancel": "Anulează",
+        "clear": "Șterge",
+        "delete": "Șterge"
+    },
+    "adminDashboard": {
+        "desks": {
+            "title": "Mese",
+            "description": "Aici poți vizualiza, crea și combina mese."
+        },
+        "menu": {
+            "title": "Meniu",
+            "description": "Aici poți vizualiza, crea și edita articolele din meniu."
+        },
+        "orders": {
+            "title": "Comenzi",
+            "description": "Aici poți gestiona comenzile."
+        },
+        "staff": {
+            "title": "Personal",
+            "description": "Aici poți gestiona personalul. Poți vizualiza, crea sau șterge profiluri de angajat."
+        },
+        "reports": {
+            "title": "Rapoarte vânzări",
+            "description": "Aici poți vizualiza rapoartele de vânzări. Poți filtra după dată și exporta datele."
+        },
+        "logOut": {
+            "title": "Deconectare",
+            "description": "Aici te poți deconecta când pleci din cafenea."
+        }
+    },
+    "desksPage": {
+        "newConfig": "Creează configurație nouă",
+        "addDesk": "Adaugă masă",
+        "save": "Salvează",
+        "delete": "Șterge",
+        "nrOfSeats": "Te rugăm să selectezi numărul de locuri",
+        "addSeats": "Adaugă locuri",
+        "clearCanvas": "Șterge tot",
+        "askDimension": "Vă rugăm să introduceți dimensiunile camerei",
+        "editSeats": "Editează locuri",
+        "roomModal": {
+            "askDimension": "Te rugăm să introduci dimensiunile încăperii",
+            "width": "Lățime",
+            "length": "Lungime",
+            "changeSize": "Schimbă dimensiunea",
+            "positiveValidationError": "Te rugăm să introduci numere pozitive"
+        },
+        "clearModal": {
+            "title": "Sigur vrei să ștergi masa?",
+            "description": "Aceasta va elimina toate mesele și va trebui să începi de la zero.",
+            "confirm": "Confirmă",
+            "cancel": "Anulează"
+        },
+        "currentSize": "Dimensiune curentă",
+        "meter": "metri",
+        "saveSuccess": "Salvat cu succes",
+        "placeOrder": "Plasează comandă",
+        "generateCode": "Generează cod",
+        "clearCode": "Șterge cod",
+        "viewOrder": "Vezi comenzi",
+        "deskCode": "Cod masă",
+        "deleteGroup": "Șterge grup",
+        "mergeModal": {
+            "title": "Combină mese",
+            "selectTables": "Mese selectate pentru combinare",
+            "merge": "Combină",
+            "cancel": "Anulează"
+        },
+        "ongoingOrders": {
+            "title": "Eroare la crearea configurației noi",
+            "message": "Ai comenzi în curs. Te rugăm să le finalizezi înainte de a crea o configurație nouă."
+        }
+    },
+    "menuPage": {
+        "title": "Gestionează meniul",
+        "searchItem": "Caută în meniu",
+        "search": "Caută",
+        "noItems": "Nu s-au găsit articole",
+        "addItem": "Adaugă articol",
+        "exportCSV": "Exportă CSV",
+        "importCSV": "Importă CSV",
+        "table": {
+            "image": "Imagine",
+            "name": "Nume",
+            "category": "Categorie",
+            "eta": "Timp preparare (minute)",
+            "description": "Descriere",
+            "quantity": "Cantitate",
+            "price": "Preț",
+            "actions": "Acțiuni"
+        },
+        "create": {
+            "title": "Creează articol meniu"
+        },
+        "editItem": {
+            "title": "Editează articol meniu",
+            "oldImage": "Imagine veche"
+        }
+    },
+    "translationPage": {
+        "title": "Gestionează traduceri",
+        "export": {
+            "title": "Exportă traducere",
+            "description": "Exportă fișierul de traducere în format XLIFF. Acest fișier poate fi folosit pentru a traduce aplicația în alte limbi.",
+            "selectLanguage": "Selectează limba sursă",
+            "export": "Exportă XLIFF",
+            "importError": "Ceva nu a funcționat la exportarea fișierului."
+        },
+        "translation": {
+            "title": "Traducere automată",
+            "description": "Aici poți traduce aplicația în alte limbi. Reține că aceste traduceri sunt automate.",
+            "selectLanguage": "Selectează limba sursă",
+            "targetLanguage": "Selectează limba țintă",
+            "sendToTranslate": "Trimite spre traducere"
+        },
+        "import": {
+            "title": "Importă traducere",
+            "description": "Importă un fișier de traducere în aplicație. Acest fișier ar trebui să fie în format XLIFF.",
+            "selectFile": "Selectează fișier XLIFF",
+            "import": "Importă",
+            "noFile": "Niciun fișier selectat",
+            "importSuccess": "Import reușit",
+            "importError": "Ceva nu a funcționat la importarea fișierului."
+        }
+    },
+    "itemCard": {
+        "description": "Descriere",
+        "price": "Preț",
+        "status": "Stare",
+        "desk": "Masă",
+        "group": "Grup",
+        "order": "Comandă",
+        "timeToPrep": "Timp preparare",
+        "lei": "lei",
+        "min": "min",
+        "orderedAt": "Comandat la",
+        "totalPrice": "Preț total",
+        "willServe": "Va fi servit aproximativ la",
+        "pricePerItem": "Preț\/articol",
+        "quantity": "Cantitate",
+        "pricePerUnit": "Preț\/unitate",
+        "outOfStock": "Stoc epuizat"
+    },
+    "modal": {
+        "cancel": "Anulează",
+        "confirm": "Confirmă",
+        "delete": "Șterge"
+    },
+    "ordersPage": {
+        "title": "Comenzi",
+        "showGuest": {
+            "deleteModalText": "Sigur vrei să ștergi acest articol din comandă?",
+            "title": "Informații comandă",
+            "orderedAt": "Comandat la",
+            "backToMenu": "Înapoi la meniu",
+            "payOrder": "Plătește comanda",
+            "orderedItems": "Articole comandate"
+        },
+        "showStaff": {
+            "deleteOrder": "Șterge comandă",
+            "orderedAt": "Comandat la",
+            "updateStatus": "Actualizează stare",
+            "payAll": "Plătește tot",
+            "paySelection": "Plătește selecția",
+            "orderedItems": "Articole comandate",
+            "paidPerAll": "Plătit\/Total",
+            "pay": "Plătește",
+            "allPaid": "Tot plătit",
+            "deleteOrderModalText": "Ștergerea unei comenzi este ireversibilă! Dorești să continui?",
+            "deleteItemModalText": "Sigur vrei să ștergi acest articol din comandă?"
+        }
+    },
+    "orderStatus": {
+        "pending": "În curs",
+        "cancelled": "Anulată",
+        "served": "Servită",
+        "completed": "Finalizată"
+    },
+    "cartActions": {
+        "addToCart": "Adaugă în coș",
+        "updateInCart": "Actualizează în coș"
+    },
+    "icons": {
+        "details": "Detalii",
+        "deleteItem": "Șterge articol"
+    },
+    "homePage": {
+        "orderHeading": "Răsfoiește meniul, plasează comanda",
+        "orderButton": "Comandă acum",
+        "loginHeading": "Ai un cont?",
+        "loginButton": "Autentificare"
+    },
+    "staffPage": {
+        "title": "Gestionează personalul",
+        "create": "Adaugă angajat",
+        "edit": "Editează",
+        "editPage": {
+            "title": "Editează angajat",
+            "name": "Nume",
+            "email": "Email",
+            "phone": "Telefon",
+            "role": "Rol",
+            "isActive": "Este activ",
+            "password": "Parolă inițială",
+            "confirmPassword": "Confirmă parola"
+        },
+        "status": "Stare",
+        "active": "Activ",
+        "inactive": "Inactiv",
+        "createdAt": "Creat la",
+        "action": "Acțiuni",
+        "confirmDelete": {
+            "title": "Șterge angajat",
+            "message": "Sigur vrei să ștergi acest angajat? Această acțiune este ireversibilă. Angajat: "
+        }
+    },
+    "reportsPage": {
+        "canvasLabel": "Cantitate vândută",
+        "title": "Rapoarte vânzări",
+        "totalRevenue": "Venit total",
+        "totalOrders": "Total comenzi",
+        "totalItems": "Total articole vândute",
+        "staffMembers": "Membri personal",
+        "allTimeOrders": "Comenzi totale",
+        "loading": "Se încarcă",
+        "exportCSV": "Exportă CSV",
+        "mostPopularItems": "Articole cele mai populare",
+        "table": {
+            "order": "Comandă",
+            "time": "Timp",
+            "status": "Stare",
+            "desk_group": "Masă \/ Grup",
+            "description": "Descriere"
+        }
+    }
+}
