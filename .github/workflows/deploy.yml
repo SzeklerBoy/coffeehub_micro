@@ -4,6 +4,9 @@ on:
   push:
     branches: [ "main" ]
 
+env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+
 jobs:
   build-and-push:
     name: Docker Image Build & Push
@@ -24,7 +27,7 @@ jobs:
         with:
           context: ./laravel-gateaway
           push: true
-          tags: csongorpeter/micro-gateway-app:latest
+          tags: petercsongor/micro-gateway-app:latest
 
   deploy-to-k8s:
     name: Automatic Kubernetes Deployment Update
