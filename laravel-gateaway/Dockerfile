@@ -29,7 +29,7 @@ COPY . .
 COPY --from=vendor /app/vendor ./vendor
 COPY --from=frontend /app/public/build ./public/build
 
-RUN rm -rf bootstrap/cache/*.php
+RUN rm -rf bootstrap/cache/*.php && rm -f .env
 
 EXPOSE 8000
 
