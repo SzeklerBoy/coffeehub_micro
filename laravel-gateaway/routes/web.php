@@ -74,7 +74,11 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
 
 Route::resource('menu', MenuItemController::class)->except(['index', 'show'])->middleware(['auth', AdminMiddleware::class]);
 
-Route::apiResource('api/menuitems', ApiMenuItemController::class);
+Route::get('/api/menuitems', [ApiMenuItemController::class, 'index'])->name('api.menuitems.index');
+Route::post('/api/menuitems', [ApiMenuItemController::class, 'store'])->name('api.menuitems.store');
+Route::get('/api/menuitems/{menuitem}', [ApiMenuItemController::class, 'show'])->name('api.menuitems.show');
+Route::put('/api/menuitems/{menuitem}', [ApiMenuItemController::class, 'update'])->name('api.menuitems.update');
+Route::delete('/api/menuitems/{menuitem}', [ApiMenuItemController::class, 'destroy'])->name('api.menuitems.destroy');
 Route::post('/api/menuitems/{menuitem}/image', [ApiMenuItemController::class, 'storeImage'])->name('menuitems.image.store');
 Route::patch('/api/menuitems/{menuitem}/image', [ApiMenuItemController::class, 'updateImage'])->name('menuitems.image.update');
 // put doesn't work for some reason, the image doesn't upload and the path does not change
