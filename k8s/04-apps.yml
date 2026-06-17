@@ -15,7 +15,7 @@ spec:
       containers:
         - name: laravel
           image: petercsongor/micro-gateway-app:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
           envFrom:
@@ -53,7 +53,7 @@ spec:
       containers:
         - name: python-api
           image: petercsongor/micro-menu-app:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8001
           env:
@@ -131,7 +131,7 @@ spec:
       containers:
         - name: node-api
           image: petercsongor/micro-order-app:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8003
           env:
