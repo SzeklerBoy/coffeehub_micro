@@ -14,15 +14,29 @@ spec:
     spec:
       containers:
         - name: gateway-app
-          image: petercsongor/micro-gateway-app:latest
+          image: petercsongor/micro-gateway-app:${{ github.sha }}
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
+          env:
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: DB_USERNAME
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: DB_PASSWORD
+            - name: DB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: DB_DATABASE
           envFrom:
             - configMapRef:
                 name: cafe-config
-            - secretRef:
-                name: cafe-secret
 ---
 apiVersion: v1
 kind: Service
