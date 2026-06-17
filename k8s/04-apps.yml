@@ -92,7 +92,7 @@ spec:
       containers:
         - name: go-api
           image: petercsongor/micro-desk-app:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8002
           env:
