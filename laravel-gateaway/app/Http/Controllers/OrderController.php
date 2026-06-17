@@ -38,8 +38,8 @@ class OrderController extends Controller
     {
         $this->orderService = $orderService;
         $this->menuService = $menuService;
-        $this->stripe = new StripeClient(env('STRIPE_SECRET'));
-        Stripe::setApiKey(env('STRIPE_KEY'));
+        $this->stripe = new StripeClient(config('services.stripe.secret'));
+        Stripe::setApiKey(config('services.stripe.key'));
         
         $this->orderServiceUrl = config('services.microservices.order');
         $this->menuServiceUrl  = config('services.microservices.menu');

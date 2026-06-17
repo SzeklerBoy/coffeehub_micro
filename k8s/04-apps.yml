@@ -39,6 +39,16 @@ spec:
                 secretKeyRef:
                   name: cafe-secret
                   key: DB_DATABASE
+            - name: STRIPE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: STRIPE_KEY
+            - name: STRIPE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: STRIPE_SECRET
           envFrom:
             - configMapRef:
                 name: cafe-config
