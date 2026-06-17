@@ -23,7 +23,7 @@ data:
   DB_FOREIGN_KEYS: "true"
 
   # Broadcast & Queue
-  BROADCAST_CONNECTION: "pusher"
+  BROADCAST_CONNECTION: "log"
   QUEUE_CONNECTION: "database"
   CACHE_STORE: "database"
   CACHE_PREFIX: ""
