@@ -6,18 +6,30 @@ use App\Http\Requests\GroupRequest;
 use App\Models\Desk;
 use App\Models\Group;
 use App\Models\Order;
+use App\Services\OrderServiceClient;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class GroupController extends Controller
 {
-    public function orderIndex(Group $group): View
-    {
-        $orders = Order::where('group_id', $group->id)->paginate(9);
+    protected OrderServiceClient $orderService;
 
-        return view('orders.index', ['orders' => $orders]);
+    public function __construct(OrderServiceClient $orderService)
+    {
+        $this->orderService = $orderService;
+    }
+
+    public function orderIndex(int $group): Response
+    {
+        $orders = $this->orderService->list(['group_id' => $group, 'limit' => 9]) ?? ['data' => []];
+
+        return Inertia::render('Orders/Index', [
+            'orders' => $orders,
+        ]);
     }
 
     public function create(): View

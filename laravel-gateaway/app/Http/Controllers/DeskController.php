@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Api\DeskApiRequest;
 use App\Http\Requests\DeskRequest;
 use App\Models\Desk;
-use App\Models\Order;
 use App\Models\Room;
+use App\Services\OrderServiceClient;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
@@ -16,9 +16,11 @@ use Inertia\Response;
 class DeskController extends Controller
 {
     protected string $deskServiceUrl;
+    protected OrderServiceClient $orderService;
 
-    public function __construct()
+    public function __construct(OrderServiceClient $orderService)
     {
+        $this->orderService = $orderService;
         $this->deskServiceUrl = config('services.microservices.desk');
     }
 
@@ -40,13 +42,12 @@ class DeskController extends Controller
         ]);
     }
 
-    public function orderIndex(Desk $desk): Response
+    public function orderIndex(int $desk): Response
     {
-        $orders = Order::where('desk_id', $desk->id)->cursorPaginate(9);
+        $orders = $this->orderService->list(['desk_id' => $desk, 'limit' => 9]) ?? ['data' => []];
 
         return Inertia::render('Orders/Index', [
             'orders' => $orders,
-            'desk' => $desk,
         ]);
     }
 

@@ -108,6 +108,14 @@ app.get('/api/orders', async (req, res) => {
             where.status = req.query.status;
         }
 
+        if (req.query.desk_id) {
+            where.desk_id = parseInt(req.query.desk_id, 10);
+        }
+
+        if (req.query.group_id) {
+            where.group_id = parseInt(req.query.group_id, 10);
+        }
+
         const sortField = req.query.sort_field || 'id';
         const sortDirection = req.query.sort_direction || 'ASC';
 
