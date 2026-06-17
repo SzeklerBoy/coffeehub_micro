@@ -72,33 +72,28 @@ class MenuItemController extends Controller
         return redirect()->route('menu.index')->with('success', 'Menu item created successfully.');
     }
 
-    // FIGYELEM: Itt a paraméter már nem `MenuItem $item`, hanem csak az ID (int $id),
-    // mert a Laravel nem tudja lekérni az adatbázisból automatikusan!
     public function edit(int $id): \Inertia\Response
     {
         Log::info('Editing menu item', ['item_id' => $id]);
 
         $locale = session('locale', 'en');
 
-        // 1. Lekérjük a menüelemet az API-tól
         $itemResponse = Http::timeout(5)->get("{$this->menuServiceUrl}/menu", ['locale' => $locale]);
         
         if ($itemResponse->failed()) {
             abort(404, 'Menu item not found in Menu Service');
         }
 
-        // Kikeressük az adott ID-t a listából (a FastAPI get_menu_items lapos listát ad)
         $items = collect($itemResponse->json());
         $item = $items->firstWhere('id', $id);
 
         if (!$item) abort(404, 'Menu item not found');
 
-        // 2. Lekérjük a kategóriákat az API-tól
         $catResponse = Http::timeout(3)->get("{$this->menuServiceUrl}/categories", ['locale' => $locale]);
         $distinctCategories = $catResponse->successful() ? $catResponse->json() : [];
 
         return Inertia::render('Menu/Edit', [
-            'item' => $item, // Ez már eleve a lapos formátum!
+            'item' => $item, 
             'categories' => $distinctCategories,
         ]);
     }
@@ -121,13 +116,41 @@ class MenuItemController extends Controller
         return redirect()->route('menu.index')->with('success', 'Menu item updated successfully.');
     }
 
+    public function getByCategory(Request $request)
+    {
+        $category = $request->input('category');
+        $page = $request->input('page', 1);
+        $locale = session('locale', 'en');
+
+        $response = Http::timeout(5)->get("{$this->menuServiceUrl}/menu", [
+            'category' => $category,
+            'locale' => $locale,
+        ]);
+
+        if ($response->failed()) {
+            return response()->json(['data' => [], 'prev_page_url' => null, 'next_page_url' => null]);
+        }
+
+        $items = $response->json();
+        $perPage = 6;
+        $totalItems = count($items);
+        $totalPages = ceil($totalItems / $perPage);
+        $offset = ($page - 1) * $perPage;
+        $paginatedItems = array_slice($items, $offset, $perPage);
+
+        return response()->json([
+            'data' => $paginatedItems,
+            'prev_page_url' => $page > 1 ? "/menu-cat?category={$category}&page=" . ($page - 1) : null,
+            'next_page_url' => $page < $totalPages ? "/menu-cat?category={$category}&page=" . ($page + 1) : null,
+        ]);
+    }
+
+
     public function destroy(int $id): RedirectResponse
     {
-        // A törlést (és a készletellenőrzést is) rábízzuk a FastAPI-ra!
         $response = Http::timeout(5)->delete("{$this->menuServiceUrl}/menu/{$id}");
 
         if ($response->failed()) {
-            // Ha a FastAPI 400-as hibát dob (mert van még készleten), a JSON detail üzenetét írjuk ki
             $errorMessage = $response->json('detail') ?? 'Failed to delete menu item.';
             return redirect()->route('menu.index')->with('error', $errorMessage);
         }
@@ -144,7 +167,6 @@ class MenuItemController extends Controller
             'Content-Disposition' => sprintf('attachment; filename="%s"', $csvFileName),
         ];
 
-        // Lekérjük az összes elemet a FastAPI-ból exportáláshoz
         $response = Http::timeout(10)->get("{$this->menuServiceUrl}/menu", ['locale' => 'en']);
         $menuItems = $response->successful() ? $response->json() : [];
 

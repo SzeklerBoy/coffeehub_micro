@@ -1,0 +1,29 @@
+meta {
+  name: AddMenuItem
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://46.101.179.229/api/menu
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "quantity": 1,
+    "price": 3.50,
+    "image_path": "/images/espresso.jpg",
+    "ETAinMinutes": 5,
+    "locale": "en",
+    "name": "Espresso",
+    "description": "Strong and rich single shot coffee",
+    "category": "Coffee"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

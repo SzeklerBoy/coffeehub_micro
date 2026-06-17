@@ -3,7 +3,7 @@ version: '3.8'
 services:
   cafe-db:
     image: mysql:8.0
-    container_name: cafe-mysql
+    container_name: cafe-db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword123

@@ -23,7 +23,7 @@ Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 Route::delete('/orders/{order:uuid}/menuitem/{menuItem}/delete', [OrderController::class, 'removeItem'])->name('orders.menuitem.destroy');
 Route::get('/orders/{order:uuid}/checkout', [OrderController::class, 'payAll'])->name('orders.checkout.all');
 Route::get('/orders/{order:uuid}/checkout/callback', [OrderController::class, 'checkoutCallback'])->name('orders.checkout.callback');
-// Route::get('/menu-cat', [MenuItemController::class, 'getByCategory'])->name('menu.show');
+Route::get('/menu-cat', [MenuItemController::class, 'getByCategory'])->name('menu.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashBoardController::class, 'index'])->name('dashboard');
