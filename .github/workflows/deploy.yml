@@ -22,33 +22,45 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      # --- GATEWAY ---
       - name: Build and Push Gateway Image
         uses: docker/build-push-action@v5
         with:
           context: ./laravel-gateaway
           push: true
-          tags: petercsongor/micro-gateway-app:latest
+          tags: |
+            petercsongor/micro-gateway-app:latest
+            petercsongor/micro-gateway-app:${{ github.sha }}
 
+      # --- MENU ---
       - name: Build and Push Menu Service Image
         uses: docker/build-push-action@v5
         with:
           context: ./menu-fastapi
           push: true
-          tags: petercsongor/micro-menu-app:latest
+          tags: |
+            petercsongor/micro-menu-app:latest
+            petercsongor/micro-menu-app:${{ github.sha }}
 
+      # --- DESK ---
       - name: Build and Push Desk Service Image
         uses: docker/build-push-action@v5
         with:
           context: ./desk-service-go
           push: true
-          tags: petercsongor/micro-desk-app:latest
+          tags: |
+            petercsongor/micro-desk-app:latest
+            petercsongor/micro-desk-app:${{ github.sha }}
 
+      # --- ORDER ---
       - name: Build and Push Order Service Image
         uses: docker/build-push-action@v5
         with:
           context: ./order-service-node
           push: true
-          tags: petercsongor/micro-order-app:latest
+          tags: |
+            petercsongor/micro-order-app:latest
+            petercsongor/micro-order-app:${{ github.sha }}
 
   deploy-to-k8s:
     name: Automatic Kubernetes Deployment Update
@@ -56,24 +68,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v4
-
       - name: Execute SSH Commands on VPS
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          SHA: ${{ github.sha }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: root
           key: ${{ secrets.VPS_SSH_KEY }}
+          envs: SHA
           script: |
+            kubectl set image deployment/gateway-app gateway-app=petercsongor/micro-gateway-app:$SHA
+            kubectl set image deployment/menu-app menu-app=petercsongor/micro-menu-app:$SHA
+            kubectl set image deployment/desk-app desk-app=petercsongor/micro-desk-app:$SHA
+            kubectl set image deployment/order-app order-app=petercsongor/micro-order-app:$SHA
 
-            kubectl apply -f k8s/01-configmap.yml
-            kubectl apply -f k8s/02-secret.yml
-            kubectl apply -f k8s/03-databases.yml
-            kubectl apply -f k8s/04-apps.yml
-            kubectl apply -f k8s/05-ingress.yml
-
-            kubectl rollout restart deployment/gateway-app
-            kubectl rollout restart deployment/menu-app
-            kubectl rollout restart deployment/desk-app
-            kubectl rollout restart deployment/order-app
+            kubectl rollout status deployment/gateway-app
