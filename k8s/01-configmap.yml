@@ -80,3 +80,6 @@ data:
 
   # Security
   BCRYPT_ROUNDS: "12"
+
+  ORDER_DB_HOST: "order-db"
+  ORDER_DB_PORT: "3306"
