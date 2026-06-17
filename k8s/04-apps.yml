@@ -13,7 +13,7 @@ spec:
         app: gateway-app
     spec:
       containers:
-        - name: laravel
+        - name: gateway-app
           image: petercsongor/micro-gateway-app:latest
           imagePullPolicy: Always
           ports:
@@ -51,7 +51,7 @@ spec:
         app: menu-app
     spec:
       containers:
-        - name: python-api
+        - name: menu-app
           image: petercsongor/micro-menu-app:latest
           imagePullPolicy: Always
           ports:
@@ -90,7 +90,7 @@ spec:
         app: desk-app
     spec:
       containers:
-        - name: go-api
+        - name: desk-app
           image: petercsongor/micro-desk-app:latest
           imagePullPolicy: Always
           ports:
@@ -129,7 +129,7 @@ spec:
         app: order-app
     spec:
       containers:
-        - name: node-api
+        - name: order-app
           image: petercsongor/micro-order-app:latest
           imagePullPolicy: Always
           ports:
