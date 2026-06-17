@@ -114,7 +114,7 @@ def get_db():
     finally:
         db.close()
         
-@app.get("/api/menuitems", response_model=List[MenuItemFlatSchema])
+@app.get("/api/menu", response_model=List[MenuItemFlatSchema])
 def get_menu_items(
     locale: str = "en",
     search: Optional[str] = None,
@@ -159,7 +159,7 @@ def get_menu_items(
 
     return formatted_items
 
-@app.get("/api/menuitems/{menu_item_id}", response_model=MenuItemSchema)
+@app.get("/api/menu/{menu_item_id}", response_model=MenuItemSchema)
 def get_menu_item(menu_item_id: int, db: Session = Depends(get_db)):
     menu_item = db.query(MenuItem).filter(MenuItem.id == menu_item_id).first()
     if not menu_item:
@@ -183,7 +183,7 @@ def get_distinct_categories(locale: str = "en", db: Session = Depends(get_db)):
 
     return [category[0] for category in categories]
 
-@app.post("/api/menuitems", response_model=MenuItemFlatSchema, status_code=201)
+@app.post("/api/menu", response_model=MenuItemFlatSchema, status_code=201)
 def create_menu_item(item_data: MenuItemCreate, db: Session = Depends(get_db)):
     
     language = db.query(Language).filter(Language.code == item_data.locale).first()
@@ -227,7 +227,7 @@ def create_menu_item(item_data: MenuItemCreate, db: Session = Depends(get_db)):
         "category": new_translation.category,
     }
     
-@app.put("/api/menuitems/{item_id}", response_model=MenuItemFlatSchema)
+@app.put("/api/menu/{item_id}", response_model=MenuItemFlatSchema)
 def update_menu_item(item_id: int, item_data: MenuItemUpdate, db: Session = Depends(get_db)):
     
     db_item = db.query(MenuItem).filter(MenuItem.id == item_id).first()
@@ -276,7 +276,7 @@ def update_menu_item(item_id: int, item_data: MenuItemUpdate, db: Session = Depe
         "category": final_translation.category,
     }
 
-@app.delete("/api/menuitems/{item_id}", status_code=204)
+@app.delete("/api/menu/{item_id}", status_code=204)
 def delete_menu_item(item_id: int, db: Session = Depends(get_db)):
     db_item = db.query(MenuItem).filter(MenuItem.id == item_id).first()
     if not db_item:

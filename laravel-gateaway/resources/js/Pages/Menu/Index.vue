@@ -34,7 +34,7 @@ const submitSearch = () => {
 };
 
 const fetchMenuItems = async () => {
-    const response = await axios.get(`/api/menuitems`, {
+    const response = await axios.get(`/api/menu`, {
         params: {
             locale: locale.value,
             search: search.value,

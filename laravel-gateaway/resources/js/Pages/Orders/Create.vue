@@ -30,7 +30,7 @@ provide("group", props.group);
 
 async function loadItems() {
     //load items from server
-    const response = await axios.get(`/api/menuitems`, {
+    const response = await axios.get(`/api/menu`, {
         params: { locale: locale.value },
     });
     items.value = response.data;

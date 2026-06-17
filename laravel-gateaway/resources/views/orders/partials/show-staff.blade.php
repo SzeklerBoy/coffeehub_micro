@@ -188,7 +188,7 @@
     <script>
         async function deleteItem(menuItemId) {
             let form = document.querySelector('#delete-item');
-            form.setAttribute('action', `/orders/{{ $order->uuid }}/menuitem/${menuItemId}/delete`);
+            form.setAttribute('action', `/orders/{{ $order->uuid }}/menu/${menuItemId}/delete`);
             form.submit();
         }
     </script>

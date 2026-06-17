@@ -20,7 +20,7 @@ Route::get('/', [DashBoardController::class, 'index'])->name('home');
 Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
 Route::get('/orders/{order:uuid}', [OrderController::class, 'show'])->name('orders.show');
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-Route::delete('/orders/{order:uuid}/menuitem/{menuItem}/delete', [OrderController::class, 'removeItem'])->name('orders.menuitem.destroy');
+Route::delete('/orders/{order:uuid}/menu/{menuItem}/delete', [OrderController::class, 'removeItem'])->name('orders.menuitem.destroy');
 Route::get('/orders/{order:uuid}/checkout', [OrderController::class, 'payAll'])->name('orders.checkout.all');
 Route::get('/orders/{order:uuid}/checkout/callback', [OrderController::class, 'checkoutCallback'])->name('orders.checkout.callback');
 Route::get('/menu-cat', [MenuItemController::class, 'getByCategory'])->name('menu.show');
@@ -74,13 +74,13 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
 
 Route::resource('menu', MenuItemController::class)->except(['index', 'show'])->middleware(['auth', AdminMiddleware::class]);
 
-Route::get('/api/menuitems', [ApiMenuItemController::class, 'index'])->name('api.menuitems.index');
-Route::post('/api/menuitems', [ApiMenuItemController::class, 'store'])->name('api.menuitems.store');
-Route::get('/api/menuitems/{menuitem}', [ApiMenuItemController::class, 'show'])->name('api.menuitems.show');
-Route::put('/api/menuitems/{menuitem}', [ApiMenuItemController::class, 'update'])->name('api.menuitems.update');
-Route::delete('/api/menuitems/{menuitem}', [ApiMenuItemController::class, 'destroy'])->name('api.menuitems.destroy');
-Route::post('/api/menuitems/{menuitem}/image', [ApiMenuItemController::class, 'storeImage'])->name('menuitems.image.store');
-Route::patch('/api/menuitems/{menuitem}/image', [ApiMenuItemController::class, 'updateImage'])->name('menuitems.image.update');
+Route::get('/api/menu', [ApiMenuItemController::class, 'index'])->name('api.menuitems.index');
+Route::post('/api/menu', [ApiMenuItemController::class, 'store'])->name('api.menuitems.store');
+Route::get('/api/menu/{menuitem}', [ApiMenuItemController::class, 'show'])->name('api.menuitems.show');
+Route::put('/api/menu/{menuitem}', [ApiMenuItemController::class, 'update'])->name('api.menuitems.update');
+Route::delete('/api/menu/{menuitem}', [ApiMenuItemController::class, 'destroy'])->name('api.menuitems.destroy');
+Route::post('/api/menu/{menuitem}/image', [ApiMenuItemController::class, 'storeImage'])->name('menuitems.image.store');
+Route::patch('/api/menu/{menuitem}/image', [ApiMenuItemController::class, 'updateImage'])->name('menuitems.image.update');
 // put doesn't work for some reason, the image doesn't upload and the path does not change
 
 Route::get('/api/desks', [DeskController::class, 'apiIndex'])->name('api.desks.index');
@@ -93,7 +93,7 @@ Route::get('/api/rooms', [RoomApiController::class, 'index'])->name('api.rooms.i
 Route::post('/api/rooms', [RoomApiController::class, 'store'])->name('api.rooms.store');
 Route::put('/api/rooms/{room}', [RoomApiController::class, 'update'])->name('api.rooms.update');
 
-Route::get('/api/orders/{order:uuid}/menuItems', [OrderController::class, 'getMenuItems'])->name('api.orders.menuItems');
+Route::get('/api/orders/{order:uuid}/menu', [OrderController::class, 'getMenuItems'])->name('api.orders.menuItems');
 
 Route::post('/api/setLocale', function (Illuminate\Http\Request $request) {
     $locale = $request->input('locale');
