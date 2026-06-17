@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/orders/{order:uuid}/checkout', [OrderController::class, 'createPayment'])->name('orders.checkout');
     Route::get('/desks/{desk}/orders/create', [OrderController::class, 'createFromDesk'])->name('desks.orders.create');
     Route::get('/desks/{desk}/orders', [DeskController::class, 'orderIndex'])->name('desks.orders.index');
-    Route::post('/desks/{desk}/orders', [OrderController::class, 'storeDeskOrder'])->name('desks.orders.store');
+    Route::post('/desks/{deskId}/orders', [OrderController::class, 'storeDeskOrder'])->name('desks.orders.store');
     Route::get('/groups/{group}/orders/create', [OrderController::class, 'createFromGroup'])->name('groups.orders.create');
     Route::get('/groups/{group}/orders', [GroupController::class, 'orderIndex'])->name('groups.orders.index');
     Route::post('/groups/{group}/orders', [OrderController::class, 'storeGroupOrder'])->name('groups.orders.store');

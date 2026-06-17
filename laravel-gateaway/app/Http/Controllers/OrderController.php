@@ -159,28 +159,148 @@ class OrderController extends Controller
         ]);
     }
 
-    public function createFromDesk(Desk $desk): View
+    public function createFromDesk(string $deskId): View
     {
-        return $this->createOrderViewForModel($desk);
+        return $this->createOrderViewForTarget('desk', $deskId);
     }
 
-    public function createFromGroup(Group $group): View
+    public function createFromGroup(string $groupId): View
     {
-        return $this->createOrderViewForModel($group);
+        return $this->createOrderViewForTarget('group', $groupId);
     }
 
-    public function storeDeskOrder(Desk $desk, Request $request): RedirectResponse
+   public function storeDeskOrder(string $deskId, Request $request): RedirectResponse
     {
-        $order = $this->createOrderForTarget($desk, json_decode($request->cart, true) ?? []);
-
+        $order = $this->createOrderForTarget($deskId, null, json_decode($request->cart, true) ?? []);
         return $this->handleCreatedOrder($order);
     }
 
-    public function storeGroupOrder(Group $group, Request $request): RedirectResponse
+    public function storeGroupOrder(string $groupId, Request $request): RedirectResponse
     {
-        $order = $this->createOrderForTarget($group, json_decode($request->cart, true) ?? []);
-
+        $order = $this->createOrderForTarget(null, $groupId, json_decode($request->cart, true) ?? []);
         return $this->handleCreatedOrder($order);
+    }
+
+    private function createOrderViewForTarget(string $type, string $id): View
+    {
+        $locale = session('locale', 'en');
+        $distinctCategories = $this->menuService->getCategories($locale);
+        $items = $this->menuService->getItems(locale: $locale);
+
+        $targetData = ['id' => $id];
+        try {
+            $endpoint = $type === 'desk' ? "/desks/{$id}" : "/groups/{$id}";
+            $response = Http::timeout(3)->get($this->deskServiceUrl . $endpoint);
+            if ($response->successful()) {
+                $targetData = $response->json();
+            }
+        } catch (\Exception $e) {
+            Log::warning("Nem sikerült lekérni a(z) {$type} adatait a Go szerviztől.");
+        }
+
+        return match ($type) {
+            'desk' => view('orders.create-staff', [
+                'items' => $items,
+                'desk' => $targetData,
+                'group' => '',
+                'categories' => $distinctCategories,
+            ]),
+            'group' => view('orders.create-staff', [
+                'items' => $items,
+                'group' => $targetData,
+                'desk' => '',
+                'categories' => $distinctCategories,
+            ]),
+            default => view('orders.create-guest', [
+                'items' => $items,
+                'group' => '',
+                'desk' => '',
+                'categories' => $distinctCategories,
+            ]),
+        };
+    }
+
+    private function createOrderForTarget(?string $deskId, ?string $groupId, array $cartItems, ?string $code = null): ?array
+    {
+        // 1. Célpont azonosítása
+        if ($code) {
+            // Itt a Go szerviztől kellene megkérdezni, hogy érvényes-e a kód
+            // (Ha van ilyen végpontod a Desk Service-ben)
+            try {
+                $response = Http::timeout(3)->get($this->deskServiceUrl . "/verify-code/{$code}");
+                if ($response->successful()) {
+                    $deskId = $response->json('desk_id');
+                    $groupId = $response->json('group_id');
+                } else {
+                    throw new \RuntimeException('Érvénytelen kód.');
+                }
+            } catch (\Exception $e) {
+                // Biztonsági fallback (ha nincs még verify-code végpontod a Go-ban)
+                throw new \RuntimeException('Nem lehetett ellenőrizni a kódot.');
+            }
+            $description = "Created by guest with code: $code";
+        } elseif (Auth::check()) {
+            $description = sprintf('Created by %s', Auth::user()->name);
+        } else {
+            throw new \RuntimeException('Code not provided and user not authenticated.');
+        }
+
+        if (! $deskId && ! $groupId) {
+            Log::error('No valid target found for order creation.', ['code' => $code, 'cartItems' => $cartItems]);
+            return null;
+        }
+
+        // 2. Tételek ellenőrzése
+        $itemIds = array_keys($cartItems);
+        $menuItems = collect($this->menuService->getItems(array_map('intval', $itemIds)))->keyBy('id');
+
+        $items = [];
+        $totalPrepTime = 0;
+
+        foreach ($cartItems as $itemId => $item) {
+            $menuItem = $menuItems->get((int) $itemId);
+            if (! $menuItem) continue;
+
+            if ($menuItem['quantity'] < 1) {
+                Log::warning('Menu item out of stock.', ['menu_item_id' => $menuItem['id']]);
+                return null;
+            }
+
+            $quantity = min((int) $menuItem['quantity'], (int) $item['quantity']);
+            if ($quantity < 1) continue;
+
+            $totalPrepTime += ($menuItem['ETAinMinutes'] ?? 0) * $quantity;
+            $items[] = [
+                'menu_item_id' => $menuItem['id'],
+                'quantity' => $quantity,
+                'unit_price' => $menuItem['price'],
+                'prep_time' => $menuItem['ETAinMinutes'] ?? 0,
+            ];
+        }
+
+        if ($items === []) return null;
+
+        // 3. Rendelés mentése a Node.js Order Service-ben
+        $createdOrder = $this->orderService->create([
+            'desk_id' => $deskId,
+            'group_id' => $groupId,
+            'waiter_id' => Auth::user()?->id,
+            'description' => $description,
+            'totalPrepTime' => $totalPrepTime,
+            'status' => 'ordered',
+            'items' => $items,
+        ]);
+
+        if (! $createdOrder) return null;
+
+        // 4. Asztal/Csoport foglalttá tétele (Az Eloquent update() helyett HTTP hívás a Go felé!)
+        if ($deskId) {
+            Http::timeout(3)->put($this->deskServiceUrl . "/desks/{$deskId}/occupy");
+        } elseif ($groupId) {
+            Http::timeout(3)->put($this->deskServiceUrl . "/groups/{$groupId}/occupy");
+        }
+
+        return $createdOrder;
     }
 
     public function store(Request $request): RedirectResponse
@@ -284,95 +404,6 @@ class OrderController extends Controller
                 'categories' => $distinctCategories,
             ]),
         };
-    }
-
-    private function createOrderForTarget(Desk|Group|null $target, array $cartItems, ?string $code = null): ?array
-    {
-        if ($code) {
-            $desk = Desk::query()->where('code', $code)->first();
-            $group = Group::query()->where('code', $code)->first();
-            $target = $desk ?? $group;
-            $description = "Created by guest with code: $code";
-        } elseif (Auth::check()) {
-            $description = sprintf('Created by %s', Auth::user()->name);
-        } else {
-            throw new \RuntimeException('Code not provided and user not authenticated.');
-        }
-
-        if (! $target) {
-            Log::error('No valid target found for order creation.', ['code' => $code, 'cartItems' => $cartItems]);
-            return null;
-        }
-
-        $itemIds = array_keys($cartItems);
-        $menuItems = collect($this->menuService->getItems(array_map('intval', $itemIds)))->keyBy('id');
-
-        $items = [];
-        $totalPrepTime = 0;
-
-        foreach ($cartItems as $itemId => $item) {
-            $menuItem = $menuItems->get((int) $itemId);
-            if (! $menuItem) {
-                continue;
-            }
-
-            if ($menuItem['quantity'] < 1) {
-                Log::warning('Menu item out of stock.', ['menu_item_id' => $menuItem['id']]);
-                return null;
-            }
-
-            $quantity = min((int) $menuItem['quantity'], (int) $item['quantity']);
-            if ($quantity < 1) {
-                continue;
-            }
-
-            $totalPrepTime += ($menuItem['ETAinMinutes'] ?? 0) * $quantity;
-            $items[] = [
-                'menu_item_id' => $menuItem['id'],
-                'quantity' => $quantity,
-                'unit_price' => $menuItem['price'],
-                'prep_time' => $menuItem['ETAinMinutes'] ?? 0,
-            ];
-        }
-
-        if ($items === []) {
-            Log::warning('No valid items found for order creation.', ['cartItems' => $cartItems]);
-            return null;
-        }
-
-        Log::info('Creating order for target.', [
-            'target_type' => $target instanceof Desk ? 'Desk' : 'Group',
-            'target_id' => $target->id,
-            'description' => $description,
-            'totalPrepTime' => $totalPrepTime,
-            'items' => $items,
-        ]);
-
-        $createdOrder = $this->orderService->create([
-            'desk_id' => $target instanceof Desk ? $target->id : null,
-            'group_id' => $target instanceof Group ? $target->id : null,
-            'waiter_id' => Auth::user()?->id,
-            'description' => $description,
-            'totalPrepTime' => $totalPrepTime,
-            'status' => 'ordered',
-            'items' => $items,
-        ]);
-
-        Log::info('Order creation response from OrderServiceClient.', ['response' => $createdOrder]);
-
-        if (! $createdOrder) {
-            return null;
-        }
-
-        if ($target instanceof Desk) {
-            $target->update(['is_occupied' => true]);
-        }
-
-        if ($target instanceof Group) {
-            $target->desks->each->update(['is_occupied' => true]);
-        }
-
-        return $createdOrder;
     }
 
     private function handleCreatedOrder(?array $order, bool $returnBack = false): RedirectResponse

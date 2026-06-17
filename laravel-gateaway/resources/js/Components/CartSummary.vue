@@ -24,7 +24,7 @@ const form = useForm({
 const postRoute = computed(() => {
     /* eslint-disable no-undef */
     return desk
-        ? route("desks.orders.store", desk)
+        ? route("desks.orders.store", { deskId: desk })
         : group
           ? route("groups.orders.store", group)
           : route("orders.store");
