@@ -1,0 +1,280 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cafe-db-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cafe-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cafe-db
+  template:
+    metadata:
+      labels:
+        app: cafe-db
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: MAIN_DB_ROOT_PASS
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: MAIN_DB_NAME
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: MAIN_DB_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: MAIN_DB_PASS
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: cafe-db-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: cafe-db-storage
+          persistentVolumeClaim:
+            claimName: cafe-db-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cafe-db
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: cafe-db
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: menu-db-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: menu-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: menu-db
+  template:
+    metadata:
+      labels:
+        app: menu-db
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: MENU_DB_ROOT_PASS
+            - name: MYSQL_DATABASE
+              value: "cafe_menu_db"
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: MENU_DB_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: MENU_DB_PASS
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: menu-db-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: menu-db-storage
+          persistentVolumeClaim:
+            claimName: menu-db-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: menu-db
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: menu-db
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: desk-db-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: desk-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: desk-db
+  template:
+    metadata:
+      labels:
+        app: desk-db
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: DESK_DB_ROOT_PASS
+            - name: MYSQL_DATABASE
+              value: "cafe_desks_db"
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: DESK_DB_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: DESK_DB_PASS
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: desk-db-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: desk-db-storage
+          persistentVolumeClaim:
+            claimName: desk-db-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: desk-db
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: desk-db
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: order-db-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-db
+  template:
+    metadata:
+      labels:
+        app: order-db
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          command: ["mysqld", "--default-authentication-plugin=mysql_native_password"]
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: ORDER_DB_ROOT_PASS
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: ORDER_DB_NAME
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: ORDER_DB_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: ORDER_DB_PASS
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: order-db-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: order-db-storage
+          persistentVolumeClaim:
+            claimName: order-db-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-db
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: order-db

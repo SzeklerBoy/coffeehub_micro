@@ -1,0 +1,172 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway-app
+  template:
+    metadata:
+      labels:
+        app: gateway-app
+    spec:
+      containers:
+        - name: laravel
+          image: petercsongor/micro-gateway-app:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: cafe-config
+            - secretRef:
+                name: cafe-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-app
+spec:
+  ports:
+    - port: 8000
+  selector:
+    app: gateway-app
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: menu-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: menu-app
+  template:
+    metadata:
+      labels:
+        app: menu-app
+    spec:
+      containers:
+        - name: python-api
+          image: petercsongor/micro-menu-app:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8001
+          env:
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: MENU_DB_URL
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: menu-app
+spec:
+  ports:
+    - port: 8001
+  selector:
+    app: menu-app
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: desk-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: desk-app
+  template:
+    metadata:
+      labels:
+        app: desk-app
+    spec:
+      containers:
+        - name: go-api
+          image: petercsongor/micro-desk-app:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8002
+          env:
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: DESK_DB_URL
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: desk-app
+spec:
+  ports:
+    - port: 8002
+  selector:
+    app: desk-app
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-app
+  template:
+    metadata:
+      labels:
+        app: order-app
+    spec:
+      containers:
+        - name: node-api
+          image: petercsongor/micro-order-app:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8003
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: cafe-config
+                  key: ORDER_DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: cafe-config
+                  key: ORDER_DB_PORT
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: ORDER_DB_USER
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: ORDER_DB_PASS
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: cafe-secret
+                  key: ORDER_DB_NAME
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-app
+spec:
+  ports:
+    - port: 8003
+  selector:
+    app: order-app

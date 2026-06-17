@@ -36,3 +36,5 @@ __pycache__/
 /order-service-node/npm-debug.log*
 /order-service-node/yarn-debug.log*
 /order-service-node/yarn-error.log*
+
+k8s/02-secret.yml
