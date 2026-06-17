@@ -1,0 +1,116 @@
+version: '3.8'
+
+services:
+  cafe-db:
+    image: mysql:8.0
+    container_name: cafe-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword123
+      MYSQL_DATABASE: coffeehub
+      MYSQL_USER: cafe_user
+      MYSQL_PASSWORD: cafe_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - cafe-db-data:/var/lib/mysql  
+
+  menu-db:
+    image: mysql:8.0
+    container_name: cafe-menu-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword123
+      MYSQL_DATABASE: cafe_menu_db
+      MYSQL_USER: menu_user
+      MYSQL_PASSWORD: menu_password
+    ports:
+      - "3310:3306"
+    volumes:
+      - menu-db-data:/var/lib/mysql
+
+  desk-db:
+    image: mysql:8.0
+    container_name: cafe-desk-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword123
+      MYSQL_DATABASE: cafe_desks_db
+      MYSQL_USER: desk_user
+      MYSQL_PASSWORD: desk_password
+    ports:
+      - "3307:3306"
+    volumes:
+      - desk-db-data:/var/lib/mysql
+
+  order-db:
+    image: mysql:8.0
+    container_name: cafe-order-mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword123
+      MYSQL_DATABASE: cafe_orders_db
+      MYSQL_USER: order_user
+      MYSQL_PASSWORD: order_password
+    ports:
+      - "3309:3306"
+    volumes:
+      - order-db-data:/var/lib/mysql
+
+  menu-app:
+    build: 
+      context: ./menu-fastapi
+    container_name: cafe-menu-app
+    ports:
+      - "8001:8001"
+    depends_on:
+      - menu-db
+    environment:
+      - DB_URL=mysql+pymysql://menu_user:menu_password@menu-db:3306/cafe_menu_db
+
+  desk-app:
+    build: 
+      context: ./desk-service-go
+    container_name: cafe-desk-app
+    ports:
+      - "8002:8002"
+    depends_on:
+      - desk-db
+    environment:
+      - DB_URL=desk_user:desk_password@tcp(desk-db:3306)/cafe_desks_db?charset=utf8mb4&parseTime=True&loc=Local
+
+  order-app:
+    build: 
+      context: ./order-service-node
+    container_name: cafe-order-app
+    ports:
+      - "8003:8003"
+    depends_on:
+      - order-db
+    environment:
+      - DB_HOST=order-db
+      - DB_PORT=3306
+
+  gateway-app:
+    build: 
+      context: ./laravel-gateaway 
+    container_name: cafe-gateway-app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - menu-app
+      - desk-app
+      - order-app
+      - cafe-db 
+    environment:
+      - MENU_SERVICE_URL=http://menu-app:8001/api
+      - DESK_SERVICE_URL=http://desk-app:8002/api
+      - ORDER_SERVICE_URL=http://order-app:8003/api
+      - DB_HOST=host.docker.internal 
+
+volumes:
+  menu-db-data:
+  desk-db-data:
+  order-db-data:
+  cafe-db-data:
