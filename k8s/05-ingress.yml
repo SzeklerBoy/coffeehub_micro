@@ -28,7 +28,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /api/menu
+          - path: /api/menuitems
             pathType: Prefix
             backend:
               service:
